@@ -23,9 +23,9 @@ module Icalendar
 
     def initialize(source, strict = false, verbose = false)
       if source.respond_to? :gets
-        @source = source
+        @source = source.lstrip
       elsif source.respond_to? :to_s
-        @source = StringIO.new source.to_s, 'r'
+        @source = StringIO.new source.to_s.lstrip, 'r'
       else
         msg = 'Icalendar::Parser.new must be called with a String or IO object'
         Icalendar.fatal msg

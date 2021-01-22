@@ -109,6 +109,16 @@ describe Icalendar::Parser do
         expect(event.custom_properties['x_alt_desc']).to eq ['Some text']
       end
     end
+
+    context 'empty first line' do
+      let(:fn) { 'empty_first_line.ics' }
+
+      it 'works' do
+        parsed = subject.parse
+        event = parsed.first.events.first
+        expect(event.summary).to eq 'Some summary'
+      end
+    end
   end
 
   describe '#parse with bad line' do
