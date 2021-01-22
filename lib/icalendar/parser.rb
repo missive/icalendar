@@ -98,8 +98,11 @@ module Icalendar
       if !fields[:params]['value'].nil?
         klass_name = fields[:params].delete('value').first
         unless klass_name.upcase == klass.value_type
-          klass_name = "Icalendar::Values::#{klass_name.downcase.gsub(/(?:\A|-)(.)/) { |m| m[-1].upcase }}"
-          klass = Object.const_get klass_name if Object.const_defined?(klass_name)
+          if klass_name = klass_name.downcase.scan(/\w+/)[0]
+            klass_name.gsub!(/(?:\A|-)(.)/) { |m| m[-1].upcase }
+            klass_name = "Icalendar::Values::#{klass_name}"
+            klass = Object.const_get(klass_name) if Object.const_defined?(klass_name)
+          end
         end
       end
       klass

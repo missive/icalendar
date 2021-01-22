@@ -76,6 +76,39 @@ describe Icalendar::Parser do
         expect(calendar.custom_component('X-EVENT-SERIES').size).to eq 1
       end
     end
+
+    context 'VALUE=text/html' do
+      let(:fn) { 'custom_value_text_html.ics' }
+
+      it 'does not try to find invalid constant name' do
+        parsed = subject.parse
+        event = parsed.first.events.first
+        expect(event.summary).to eq 'Some summary'
+        expect(event.custom_properties['x_alt_desc']).to eq ['<p>MSFT stuff</p>']
+      end
+    end
+
+    context 'VALUE=-text' do
+      let(:fn) { 'custom_value_bad_text.ics' }
+
+      it 'does not try to find invalid constant name' do
+        parsed = subject.parse
+        event = parsed.first.events.first
+        expect(event.summary).to eq 'Some summary'
+        expect(event.custom_properties['x_alt_desc']).to eq ['Some text']
+      end
+    end
+
+    context 'VALUE=-' do
+      let(:fn) { 'custom_value_bad.ics' }
+
+      it 'does not try to find invalid constant name' do
+        parsed = subject.parse
+        event = parsed.first.events.first
+        expect(event.summary).to eq 'Some summary'
+        expect(event.custom_properties['x_alt_desc']).to eq ['Some text']
+      end
+    end
   end
 
   describe '#parse with bad line' do
