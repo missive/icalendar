@@ -129,6 +129,23 @@ describe Icalendar::Parser do
         expect(event.summary).to eq 'Some summary'
       end
     end
+
+    context 'TZOFFSETFROM:-500' do
+      let(:fn) { 'timezone_missing_zero.ics' }
+
+      it 'works' do
+        parsed = subject.parse
+        calendar = parsed.first
+
+        daylight = calendar.timezones[0].daylights[0]
+        expect(daylight.tzoffsetfrom).to have_attributes(behind: true, hours: 5, minutes: 0)
+        expect(daylight.tzoffsetto).to   have_attributes(behind: true, hours: 4, minutes: 0)
+
+        standard = calendar.timezones[0].standards[0]
+        expect(standard.tzoffsetfrom).to have_attributes(behind: true, hours: 4, minutes: 0)
+        expect(standard.tzoffsetto).to   have_attributes(behind: true, hours: 5, minutes: 0)
+      end
+    end
   end
 
   describe '#parse with bad line' do
