@@ -119,6 +119,16 @@ describe Icalendar::Parser do
         expect(event.summary).to eq 'Some summary'
       end
     end
+
+    context 'BEGIN:VALARM' do
+      let(:fn) { 'valarm_block.ics' }
+
+      it 'ignores VALARM block' do
+        parsed = subject.parse
+        event = parsed.first.events.first
+        expect(event.summary).to eq 'Some summary'
+      end
+    end
   end
 
   describe '#parse with bad line' do

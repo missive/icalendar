@@ -17,7 +17,8 @@ module Icalendar
     def add_component(c)
       c.parent = self
       yield c if block_given?
-      send("#{c.name.downcase}s") << c
+      method_name = :"#{c.name.downcase}s"
+      send(method_name) << c if respond_to?(method_name)
       c
     end
 
