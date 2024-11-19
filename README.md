@@ -1,7 +1,7 @@
 iCalendar -- Internet calendaring, Ruby style
 ===
 
-[![Build Status](https://travis-ci.com/icalendar/icalendar.svg?branch=master)](https://travis-ci.com/icalendar/icalendar)
+[![Ruby](https://github.com/icalendar/icalendar/actions/workflows/main.yml/badge.svg)](https://github.com/icalendar/icalendar/actions/workflows/main.yml)
 [![Code Climate](https://codeclimate.com/github/icalendar/icalendar.png)](https://codeclimate.com/github/icalendar/icalendar)
 
 <http://github.com/icalendar/icalendar>
@@ -220,7 +220,8 @@ end
 iCalendar has some basic support for creating VTIMEZONE blocks from timezone information pulled from `tzinfo`.
 You must require `tzinfo` support manually to take advantage.
 
-iCalendar has been tested and works with `tzinfo` versions 0.3 and 1.x
+iCalendar has been tested and works with `tzinfo` versions 0.3, 1.x, and 2.x. The `tzinfo-data` gem may also
+be required depending on your version of `tzinfo` and potentially your operating system.
 
 #### Example ####
 
